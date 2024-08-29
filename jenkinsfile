@@ -5,14 +5,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def image = docker.build("your-dockerhub-username/docker-app:${env.BUILD_ID}")
+                    def image = docker.build("riddhi150/docker-app:${env.BUILD_ID}")
                 }
             }
         }
         stage('Run Docker Container') {
             steps {
                 script {
-                    def image = docker.image("your-dockerhub-username/docker-app:${env.BUILD_ID}")
+                    def image = docker.image("riddhi150/docker-app:${env.BUILD_ID}")
                     image.run('-d')
                 }
             }
