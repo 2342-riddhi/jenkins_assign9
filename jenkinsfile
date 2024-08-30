@@ -2,19 +2,16 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Docker Image') {
+        stage('Build and Push Image') {
             steps {
-                script {
-                    def image = docker.build("riddhi150/docker-app:${env.BUILD_ID}")
-                }
+                sh 'docker build -t my-app .'
+                sh 'docker tag my-app:latest riddhi150/my-app:latest'
+                sh 'docker push riddhi150/my-app:latest'
             }
         }
-        stage('Run Docker Container') {
+        stage('Run Container in Daemon Mode') {
             steps {
-                script {
-                    def image = docker.image("riddhi150/docker-app:${env.BUILD_ID}")
-                    image.run('-d')
-                }
+                sh 'docker run -d --name my-app-container riddhi150/my-app:latest'
             }
         }
     }
